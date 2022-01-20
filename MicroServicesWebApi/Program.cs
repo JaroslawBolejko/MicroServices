@@ -1,3 +1,10 @@
+global using System;
+global using System.Collections.Generic;
+global using System.IO;
+global using System.Linq;
+global using System.ComponentModel.DataAnnotations;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
