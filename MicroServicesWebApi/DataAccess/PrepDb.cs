@@ -1,5 +1,5 @@
 namespace MicroServicesWebApi.DataAccess;
-//helping class for testing. Maybe later i will be used for migrations.
+//helper class for testing. It deliver some date to the memory when the app is started.
 public static class PrepDb
 {
     public static void PrepPopulation(IApplicationBuilder app)

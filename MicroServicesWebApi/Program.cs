@@ -27,7 +27,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    PrepDb.PrepPopulation(app);
 }
 
 app.UseHttpsRedirection();
@@ -38,4 +37,4 @@ app.MapControllers();
 
 app.Run();
 
-//PrepDb.PrepPopulation(app);
+PrepDb.PrepPopulation(app);
