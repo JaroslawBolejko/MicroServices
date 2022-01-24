@@ -1,6 +1,6 @@
 namespace MicroServicesWebApi.DTOs;
 
-public class ReadPlatformDto
+public class PlatformReadDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

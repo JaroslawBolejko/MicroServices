@@ -6,6 +6,9 @@ global using System.ComponentModel.DataAnnotations;
 global using Microsoft.EntityFrameworkCore;
 global using MicroServicesWebApi.Models;
 global using MicroServicesWebApi.DataAccess;
+global using AutoMapper;
+global using MicroServicesWebApi.DTOs;
+
 
 
 
@@ -17,6 +20,7 @@ builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMe
 builder.Services.AddScoped<IPlatformRepo,PlatformRepo>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
