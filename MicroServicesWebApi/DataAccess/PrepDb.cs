@@ -33,7 +33,14 @@ public static class PrepDb
                     Name = "Kubernetes",
                     Publisher = "Cloud Native Computing Foundation",
                     Cost = "Free"
+                },
+                 new Platform()
+                {
+                    Name = "Azure",
+                    Publisher = "Microsoft",
+                    Cost = "pay-per-use"
                 }
+
             );
             context.SaveChanges();
         }

@@ -1,6 +1,5 @@
 global using System;
 global using System.Collections.Generic;
-global using System.IO;
 global using System.Linq;
 global using System.ComponentModel.DataAnnotations;
 global using Microsoft.EntityFrameworkCore;
@@ -8,6 +7,7 @@ global using MicroServicesWebApi.Models;
 global using MicroServicesWebApi.DataAccess;
 global using AutoMapper;
 global using MicroServicesWebApi.DTOs;
+global using Microsoft.AspNetCore.Mvc;
 
 
 
@@ -36,6 +36,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+// app.UseEndpoints(endpoints => {
+//     endpoints.MapControllers();
+// });
 
 app.MapControllers();
 
