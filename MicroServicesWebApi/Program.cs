@@ -31,18 +31,15 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+   
 }
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-// app.UseEndpoints(endpoints => {
-//     endpoints.MapControllers();
-// });
-
 app.MapControllers();
 
+ PrepDb.PrepPopulation(app);
 app.Run();
 
-PrepDb.PrepPopulation(app);
