@@ -16,9 +16,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 //Dbcontext will be moved to sqlserwer later
-builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem") );
-builder.Services.AddScoped<IPlatformRepo,PlatformRepo>();
-builder.Services.AddControllers();
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
+builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
+//builder.Services.AddControllers();
+builder.Services.AddControllersWithViews(options => { options.SuppressAsyncSuffixInActionNames = false; });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
@@ -31,16 +32,17 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-   
+
 }
 
 app.UseHttpsRedirection();
+//app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
- PrepDb.PrepPopulation(app);
- 
+PrepDb.PrepPopulation(app);
+
 app.Run();
 

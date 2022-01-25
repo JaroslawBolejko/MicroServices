@@ -1,6 +1,6 @@
 namespace MicroServicesWebApi.Models;
 
-public class ModelBase
+public abstract class ModelBase
 {
     [Key]
     [Required]

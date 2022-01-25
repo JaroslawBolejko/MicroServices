@@ -36,13 +36,19 @@ public class PlatformsController : ControllerBase
         }
         return NotFound();
 
-    }
+    } 
     [HttpPost]
-    public ActionResult<PlatformCreateDto> CreatePlatform(Platform platform)
+    public ActionResult<PlatformReadDto> CreatePlatform(PlatformCreateDto platformCreateDto)
     {
         System.Console.WriteLine("------>Creating New Platform");
-        this.platformRepo.CreatePlatform(platform);
-        return default;
-        //return Created();
+        
+        var platformModel = this.mapper.Map<Platform>(platformCreateDto);
+        this.platformRepo.CreatePlatform(platformModel);
+        this.platformRepo.SaveChanges();
+        
+        var platformReadDto = this.mapper.Map<PlatformReadDto>(platformModel);
+        
+        return CreatedAtAction(nameof(CreatePlatform),new {Id = platformReadDto.Id, platformReadDto});
     }
+
 }
