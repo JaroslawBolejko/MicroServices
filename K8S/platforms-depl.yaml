@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platforms-depl
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: microsierviceswebapi
+  template:
+    metadata:
+      labels:
+        app: microsierviceswebapi
+    spec:
+      containers:
+        - name: microsierviceswebapi
+          image: jarokm/microserviceswebapi:latest
