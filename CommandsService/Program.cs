@@ -1,3 +1,6 @@
+global using Microsoft.AspNetCore.Mvc;
+global using System;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
