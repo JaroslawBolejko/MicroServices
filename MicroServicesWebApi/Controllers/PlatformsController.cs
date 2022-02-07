@@ -6,11 +6,16 @@ public class PlatformsController : ControllerBase
 {
     private readonly IPlatformRepo platformRepo;
     private readonly IMapper mapper;
+    private readonly ICommandDataClient commandDataClient;
 
-    public PlatformsController(IPlatformRepo platformRepo, IMapper mapper)
+    public PlatformsController(
+         IPlatformRepo platformRepo,
+         IMapper mapper,
+         ICommandDataClient commandDataClient)
     {
         this.platformRepo = platformRepo;
         this.mapper = mapper;
+        this.commandDataClient = commandDataClient;
     }
     [HttpGet]
     public ActionResult<IEnumerable<PlatformReadDto>> GetPlatforms()
@@ -23,7 +28,7 @@ public class PlatformsController : ControllerBase
         return Ok(this.mapper.Map<IEnumerable<PlatformReadDto>>(platformItem));
     }
     [HttpGet]
-    [Route("{platformId}", Name="GetPlatformById")]
+    [Route("{platformId}", Name = "GetPlatformById")]
     public ActionResult<PlatformReadDto> GetPlatformById(int platformId)
     {
         System.Console.WriteLine("------>Getting Platform by Id.....");
@@ -36,19 +41,28 @@ public class PlatformsController : ControllerBase
         }
         return NotFound();
 
-    } 
+    }
     [HttpPost]
-    public ActionResult<PlatformReadDto> CreatePlatform(PlatformCreateDto platformCreateDto)
+    public async Task<ActionResult<PlatformReadDto>> CreatePlatform(PlatformCreateDto platformCreateDto)
     {
         System.Console.WriteLine("------>Creating New Platform");
-        
+
         var platformModel = this.mapper.Map<Platform>(platformCreateDto);
         this.platformRepo.CreatePlatform(platformModel);
         this.platformRepo.SaveChanges();
-        
+
         var platformReadDto = this.mapper.Map<PlatformReadDto>(platformModel);
-        
-        return CreatedAtAction(nameof(CreatePlatform),new {Id = platformReadDto.Id, platformReadDto});
+
+        try
+        {
+            await this.commandDataClient.SendPlatformToCommand(platformReadDto);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"-->Could not send synchronously: {ex.Message}");
+        }
+
+        return CreatedAtAction(nameof(CreatePlatform), new { Id = platformReadDto.Id, platformReadDto });
     }
 
 }
